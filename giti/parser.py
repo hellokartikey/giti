@@ -41,6 +41,13 @@ def get_arg_parser():
                         dest='output',
                         help='output file name')
 
+    parser.add_argument('--config-file',
+                        action='store_const',
+                        default=False,
+                        const=True,
+                        dest='list_config_file',
+                        help='show config file path')
+
     parser.add_argument('templates',
                         type=str,
                         nargs='*',

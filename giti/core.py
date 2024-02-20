@@ -4,17 +4,30 @@ from . import consts
 from . import config
 from .consts import eprint
 
-def create_gitignore(*args):
-    for template in args:
-        if template == 'default':
-            if not config.config.default:
-                eprint("No default template set")
-                return 1
 
-            print("Initializing default template...")
-            return 0
+args = None
 
-        print(f"Template: {template}")
+
+def create_gitignore():
+    templates = args.get('templates')
+
+    if templates == 'default':
+        return create_default_gitignore()
+
+    for t in templates:
+        print(f"Template: {t}")
+
+
+def create_default_gitignore():
+    if not config.config.default:
+        eprint("No default template set")
+        return 1
+
+    # TODO
+
+    print("Initializing default template...")
+    return 0
+
 
 
 def list_templates():
@@ -40,7 +53,9 @@ def list_templates():
     return 0
 
 
-def set_default_template(template: str):
+def set_default_template():
+    template = args.get('set_default')
+
     if template not in config.config.templates:
         eprint("Template not installed")
         return 1
@@ -51,7 +66,9 @@ def set_default_template(template: str):
     return 0
 
 
-def add_template(file: str, name: str):
+def add_template():
+    file, name = args.get("add")
+
     if not os.path.exists(file):
         eprint(f"{file}: no such file")
         return 1

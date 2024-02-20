@@ -5,28 +5,27 @@ from giti import config, core, consts, parser, update
 
 def main():
     argparser = parser.get_arg_parser()
-    args = vars(argparser.parse_args())
+    core.args = vars( argparser.parse_args() )
 
-    if args.get('list_config_file'):
+    if core.args.get('list_config_file'):
         print(consts.CONFIG_FILE)
-        sys.exit(0)
+        return 0
 
-    if args.get('update'):
-        sys.exit(update.update_github_templates())
+    if core.args.get('update'):
+        return update.update_github_templates()
 
-    if args.get('list_templates'):
-        sys.exit(core.list_templates())
+    if core.args.get('list_templates'):
+        return core.list_templates()
 
-    if args.get('add'):
-        sys.exit(core.add_template(*args.get('add')))
-        return
+    if core.args.get('add'):
+        return core.add_template()
 
-    if args.get('set_default'):
-        sys.exit(core.set_default_template(args.get('set_default')))
+    if core.args.get('set_default'):
+        return core.set_default_template()
 
-    return sys.exit(core.create_gitignore(*args.get('templates', ['default'])))
+    return core.create_gitignore()
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit( main() )
 

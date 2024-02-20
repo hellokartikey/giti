@@ -51,7 +51,7 @@ def get_arg_parser():
     parser.add_argument('templates',
                         type=str,
                         nargs='*',
-                        default=['default'],
+                        default='default',
                         help='name of gitignore template')
 
     return parser

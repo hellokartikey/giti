@@ -11,11 +11,15 @@ args = None
 def create_gitignore():
     templates = args.get('templates')
 
+    if os.path.exists( output := args.get('output') ):
+        if_overwrite = input(f"{output} already exists. Overwrite? [y/N] ")
+        if if_overwrite.lower() != 'y':
+            return 1
+
     if templates == 'default':
         return create_default_gitignore()
 
-    for t in templates:
-        print(f"Template: {t}")
+    return create_gitignore_from_templates( *args.get('templates') )
 
 
 def create_default_gitignore():
@@ -23,11 +27,30 @@ def create_default_gitignore():
         eprint("No default template set")
         return 1
 
-    # TODO
+    create_gitignore_from_templates( config.config.default )
 
-    print("Initializing default template...")
     return 0
 
+
+def create_gitignore_from_templates(*templates):
+    with open(args.get("output"), 'w') as f:
+        content = "# .gitignore generated using giti\n"
+        content += f"# Templates: {' '.join(templates)}\n\n"
+
+        for t in templates:
+            with open(config.template_file(t), 'r') as r:
+                content += f"# --- {t}\n\n"
+                content += r.read()
+                content += "\n"
+
+        f.write( content )
+
+    if len(templates) > 1:
+        print(f"Initializing templates: {' '.join(templates)}")
+    else:
+        print(f"Initializing template: {' '.join(templates)}")
+
+    return 0
 
 
 def list_templates():

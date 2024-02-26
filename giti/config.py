@@ -10,6 +10,18 @@ class Config:
     default = ""
     templates = []
 
+    def get_templates(self):
+        return self.templates
+
+    def set_templates(self, *args):
+        self.templates = list( args )
+
+    def get_default(self):
+        return self.default
+
+    def set_default(self, new):
+        self.default = new
+
     def __init__(self, update = 0, default="", templates=[]):
         self.update = update
         self.default = default

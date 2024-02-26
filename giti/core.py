@@ -1,17 +1,16 @@
 import os
 
-from . import consts
 from . import config
 from .consts import eprint
 
 
-args = None
+args = dict()
 
 
 def create_gitignore():
     templates = args.get('templates')
 
-    if os.path.exists( output := args.get('output') ):
+    if os.path.exists( output := args.get('output', '.gitignore') ):
         if_overwrite = input(f"{output} already exists. Overwrite? [y/N] ")
         if if_overwrite.lower() != 'y':
             return 1
@@ -23,17 +22,17 @@ def create_gitignore():
 
 
 def create_default_gitignore():
-    if not config.config.default:
+    if not config.config.get_default():
         eprint("No default template set")
         return 1
 
-    create_gitignore_from_templates( config.config.default )
+    create_gitignore_from_templates( config.config.get_default() )
 
     return 0
 
 
 def create_gitignore_from_templates(*templates):
-    with open(args.get("output"), 'w') as f:
+    with open(args.get("output", '.gitignore'), 'w') as f:
         content = "# .gitignore generated using giti\n"
         content += f"# Templates: {' '.join(templates)}\n\n"
 
@@ -54,8 +53,8 @@ def create_gitignore_from_templates(*templates):
 
 
 def list_templates():
-    default = config.config.default
-    templates = config.config.templates
+    default = config.config.get_default()
+    templates = config.config.get_templates()
 
     if len(templates) == 0:
         print("There are no templates installed.")
@@ -79,25 +78,25 @@ def list_templates():
 def set_default_template():
     template = args.get('set_default')
 
-    if template not in config.config.templates:
+    if template not in config.config.get_templates():
         eprint("Template not installed")
         return 1
 
-    config.config.default = template
+    config.config.set_default( template )
     config.write_config()
 
     return 0
 
 
 def add_template():
-    file, name = args.get("add")
+    file, name = args.get("add", ('.gitignore', 'custom'))
 
     if not os.path.exists(file):
         eprint(f"{file}: no such file")
         return 1
 
-    if name not in config.config.templates:
-        config.config.templates.append(name)
+    if name not in ( templates := config.config.get_templates() ):
+        templates.append(name)
     else:
         print(f"Template {name} already exists. Replace it? [y/N]: ", end='')
         if input().lower() != 'y':
@@ -106,8 +105,8 @@ def add_template():
     with open(file, 'r') as rf, open(config.template_file(name), 'w') as wf:
         wf.write(rf.read())
 
-    if len(config.config.templates) == 1:
-        config.config.default = name
+    if len(config.config.get_templates()) == 1:
+        config.config.set_default( name )
 
     config.write_config()
 

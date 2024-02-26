@@ -1,6 +1,6 @@
 import sys
 
-from giti import config, core, consts, parser, update
+from giti import core, consts, parser, update
 
 
 def main():

@@ -10,7 +10,7 @@ args = dict()
 def create_gitignore():
     templates = args.get('templates')
 
-    if os.path.exists( output := args.get('output', '.gitignore') ):
+    if os.path.exists(output := args.get('output', '.gitignore')):
         if_overwrite = input(f"{output} already exists. Overwrite? [y/N] ")
         if if_overwrite.lower() != 'y':
             return 1
@@ -18,7 +18,7 @@ def create_gitignore():
     if templates == 'default':
         return create_default_gitignore()
 
-    return create_gitignore_from_templates( *args.get('templates') )
+    return create_gitignore_from_templates(*args.get('templates'))
 
 
 def create_default_gitignore():
@@ -26,7 +26,7 @@ def create_default_gitignore():
         eprint("No default template set")
         return 1
 
-    create_gitignore_from_templates( config.config.get_default() )
+    create_gitignore_from_templates(config.config.get_default())
 
     return 0
 
@@ -42,7 +42,7 @@ def create_gitignore_from_templates(*templates):
                 content += r.read()
                 content += "\n"
 
-        f.write( content )
+        f.write(content)
 
     if len(templates) > 1:
         print(f"Initializing templates: {' '.join(templates)}")
@@ -82,7 +82,7 @@ def set_default_template():
         eprint("Template not installed")
         return 1
 
-    config.config.set_default( template )
+    config.config.set_default(template)
     config.write_config()
 
     return 0
@@ -95,7 +95,7 @@ def add_template():
         eprint(f"{file}: no such file")
         return 1
 
-    if name not in ( templates := config.config.get_templates() ):
+    if name not in (templates := config.config.get_templates()):
         templates.append(name)
     else:
         print(f"Template {name} already exists. Replace it? [y/N]: ", end='')
@@ -106,9 +106,8 @@ def add_template():
         wf.write(rf.read())
 
     if len(config.config.get_templates()) == 1:
-        config.config.set_default( name )
+        config.config.set_default(name)
 
     config.write_config()
 
     return 0
-

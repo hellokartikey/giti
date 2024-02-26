@@ -3,8 +3,8 @@ import argparse
 
 def get_arg_parser():
     parser = argparse.ArgumentParser(
-            prog="giti",
-            description="Create .gitignore files from templates.")
+        prog="giti",
+        description="Create .gitignore files from templates.")
 
     parser.add_argument('-u',
                         action='store_const',
@@ -54,4 +54,3 @@ def get_arg_parser():
                         help='name of gitignore template')
 
     return parser
-

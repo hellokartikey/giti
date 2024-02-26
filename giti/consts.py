@@ -12,4 +12,3 @@ CONFIG_FILE = os.path.join(DATA_DIR, 'config.ini')
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
-

@@ -5,7 +5,7 @@ from giti import core, consts, parser, update
 
 def main():
     argparser = parser.get_arg_parser()
-    core.args = vars( argparser.parse_args() )
+    core.args = vars(argparser.parse_args())
 
     if core.args.get('list_config_file'):
         print(consts.CONFIG_FILE)
@@ -27,5 +27,4 @@ def main():
 
 
 if __name__ == '__main__':
-    sys.exit( main() )
-
+    sys.exit(main())

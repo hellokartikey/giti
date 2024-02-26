@@ -14,7 +14,7 @@ class Config:
         return self.templates
 
     def set_templates(self, *args):
-        self.templates = list( args )
+        self.templates = list(args)
 
     def get_default(self):
         return self.default
@@ -22,7 +22,7 @@ class Config:
     def set_default(self, new):
         self.default = new
 
-    def __init__(self, update = 0, default="", templates=[]):
+    def __init__(self, update=0, default="", templates=[]):
         self.update = update
         self.default = default
         self.templates = templates
@@ -72,7 +72,7 @@ def write_config():
 
 def check_if_config_exists():
     return os.path.isdir(consts.DATA_DIR) and \
-           os.path.exists(consts.CONFIG_FILE)
+        os.path.exists(consts.CONFIG_FILE)
 
 
 def template_file(name: str):
@@ -80,4 +80,3 @@ def template_file(name: str):
 
 
 config = read_config()
-

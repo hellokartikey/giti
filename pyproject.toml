@@ -1,14 +1,16 @@
 [tool.poetry]
 name = "giti"
-version = "0.1.0"
-description = ""
-authors = ["Kartikey Subramanium <kartikey@tutanota.com>"]
+version = "1.0.0"
+description = "A simple utility to create gitignore files from templates."
+authors = ["Kartikey Subramanium <kartikey.sub@outlook.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
 platformdirs = "^4.2.0"
 
+[project.scripts]
+giti = "giti.cli:app"
 
 [build-system]
 requires = ["poetry-core"]

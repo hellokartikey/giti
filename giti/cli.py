@@ -26,5 +26,9 @@ def main():
     return core.create_gitignore()
 
 
-if __name__ == '__main__':
+def app():
     sys.exit(main())
+
+
+if __name__ == '__main__':
+    app()
